@@ -81,4 +81,4 @@ Example (assignment in **relative dir**, **clear prompt**):
 check11 nerdy --p assignment/
 ```
 
-# [GitHub-flavored Markdown](https://guides.github.com/features/mastering-markdown/)
+<!-- [GitHub-flavored Markdown](https://guides.github.com/features/mastering-markdown/) -->
