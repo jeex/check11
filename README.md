@@ -8,7 +8,7 @@ Your github alias needs to be added to [cpnits.com/check11](https://cpnits.com/c
 
 You can only check11 assignments that come with a check11 command. Your assignment should have a line somewhere mentioning: *"Use* 
 ```
-check11 assignmentname -c
+check11 assignmentname
 ``` 
 *to check your solution for proper structure and output."*
 
@@ -34,9 +34,9 @@ or with a **relative path** (a relative path never starts with **/**):
 check11 nerdy relative/path
 ```
 
-or in **current working directory**: 
+or by omitting the path and run check11 from the **current working directory**: 
 ```
-check11 nerdy -c 
+check11 nerdy
 ```
 
 ## For **help**: 
@@ -73,12 +73,12 @@ check11 nerdy --et /some/dir
 ## Examples
 Example (assignment in **current dir**, **errors only**, **no traceback**, **clear prompt**): 
 ```
-check11 nerdy --etp -c
+check11 nerdy --etp
 ```
 
 Example (assignment in **relative dir**, **clear prompt**): 
 ```
-check11 nerdy --p assignment/
+check11 nerdy --p some/dir
 ```
 
 <!-- [GitHub-flavored Markdown](https://guides.github.com/features/mastering-markdown/) -->
