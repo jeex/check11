@@ -18,6 +18,9 @@ from check11.base_test import ApiTest, BaseTest
 
 VERSION = '0.1.0'
 APP_NAME = 'check11'
+BASEURL = 'https://cpnits.com/check11'
+# BASEURL = 'http://127.0.0.1:5000'
+MAXSIZE = 1024 * 1024
 
 def help(short=True):
 	if short:
@@ -48,6 +51,7 @@ def read_cmd() -> dict:
 	no_trace = False
 	errors_only = False
 	clear_prompt = False
+	no_report = False
 	apath = None
 	counter = 0
 	aname = None
@@ -127,6 +131,8 @@ def read_cmd() -> dict:
 				errors_only = True
 			if 'p' in extra_args:
 				clear_prompt = True
+			if 'r' in extra_args:
+				no_report = True			
 			counter += 1
 				
 	# end sys.argv for
@@ -137,16 +143,12 @@ def read_cmd() -> dict:
 		help()
 		sys.exit()	
 
-	return apath, aname, no_trace, errors_only, clear_prompt
+	return apath, aname, no_trace, errors_only, clear_prompt, no_report
 	
 
 class TestAssignment:
-	_BASEURL = 'https://cpnits.com/check11'
-	# 'https://cpnits.com/check11' 
-	# 'http://127.0.0.1:5000' #
-	_MAXSIZE = 1024 * 1024
 
-	def __init__(self, path: str, aname: str, no_trace: bool, errors_only: bool, clear_prompt: bool):
+	def __init__(self, path: str, aname: str, no_trace: bool, errors_only: bool, clear_prompt: bool, no_report: bool):
 		self._git_alias = self.get_git_alias()
 		if self._git_alias is None:
 			print("No valid GIT account.")
@@ -154,8 +156,15 @@ class TestAssignment:
 		self._no_trace = no_trace
 		self._errors_only = errors_only
 		self._clear_prompt = clear_prompt
+		self._no_report = no_report
 		self._this_path = path
 		self._assignment = aname
+
+
+	def unescape(self, s: str) -> str:
+		ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
+		result = ansi_escape.sub('', s)
+		return result		
 
 
 	def safename(self, erin: str):
@@ -169,6 +178,7 @@ class TestAssignment:
 		umod = importlib.util.module_from_spec(umodspec)
 		umodspec.loader.exec_module(umod)
 		return umod
+
 
 	# prints report to prompt
 	def print_report(self):
@@ -190,7 +200,7 @@ class TestAssignment:
 	
 	# get permission for testing AND VERSION
 	def remote_get_permission(self) -> int:
-		url = f"{self._BASEURL}/permission/{self._git_alias}/{self._assignment}"
+		url = f"{BASEURL}/permission/{self._git_alias}/{self._assignment}"
 		try:
 			r = requests.get(url)
 			code = int(r.status_code)
@@ -246,6 +256,35 @@ class TestAssignment:
 			files.append(f)
 		self._found_filenames = files
 	
+	# store full report in user folder
+	def local_user_store_report(self):
+		s = ""
+		for r in self.full_report:
+			r = self.unescape(r)
+			s += f"{r}\n"
+			
+		path = os.path.join(self._this_path, f"{self._assignment}.log")
+		with open(path, "w") as fp:
+			fp.write(s)
+		return True
+	
+	# upload full_reports
+	def remote_upload_reports(self):
+		target_url = f"{BASEURL}/report/{self._git_alias}/{self._assignment}"
+		path = os.path.join(self._this_path, f"{self._assignment}.log")
+		with open(path, 'r') as fp:
+			s = fp.read()
+		try:
+			response = requests.post(
+				target_url,
+				json={"report": s},
+			)
+		except Exception as e:
+			print(e)
+			pass
+		# no need for output
+		# return response.status_code == 200
+	
 	
 	def run(self) -> bool:
 		# get GIT alias from email address
@@ -270,19 +309,41 @@ class TestAssignment:
 		self.get_local_filenames()
 		print(f"{Fore.CYAN}Python files ready for testing: {Style.BRIGHT}[{', '.join(self._found_filenames)}]{Style.NORMAL}.{Style.RESET_ALL}")
 		
+		self.full_report = list()
 		for fn in self._found_filenames:
 			fname = fn.replace('.py', '')
-			api = ApiTest(self._git_alias, self._this_path, self._assignment, fname, self._no_trace, self._errors_only)
-			if api.utestmod is None or api.test_o is None:
+			try: 
+				api = ApiTest(self._git_alias, self._this_path, self._assignment, fname, self._no_trace, self._errors_only)
+				if api.utestmod is None or api.test_o is None:
+					print(f"{Fore.CYAN}Testing : {Style.BRIGHT}{self._assignment}.{fname}{Style.NORMAL} failed.{Style.RESET_ALL}")
+					continue
+			except:
 				print(f"{Fore.CYAN}Testing : {Style.BRIGHT}{self._assignment}.{fname}{Style.NORMAL} failed.{Style.RESET_ALL}")
 				continue
-			self.results = api.run_utest()
-			self.print_report()
 			
+			try:
+				self.results = api.run_utest()
+				self.print_report()
+				self.full_report.extend(api.get_full_report())
+			except:
+				print(f"{Fore.CYAN}Testing : {Style.BRIGHT}{self._assignment}.{fname}{Style.NORMAL} failed.{Style.RESET_ALL}")
+				continue				
+		
+		if len(self.full_report) == 0 or self._no_report:
+			return True
+		
+		# store full report.log in user folder
+		if self.local_user_store_report():
+			print(f"{Fore.CYAN}The test report has been saved as {self._assignment}.log{Style.RESET_ALL}")
+		
+		# upload full reports 
+		self.remote_upload_reports()
+		
+		
 		return True
 	
 def run():
-	path, an, nt, eo, cp = read_cmd()
+	path, an, nt, eo, cp, nr = read_cmd()
 	# TODO check version online
-	check11 = TestAssignment(path, an, nt, eo, cp)
+	check11 = TestAssignment(path, an, nt, eo, cp, nr)
 	check11.run()

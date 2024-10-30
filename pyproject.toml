@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools", "PyYAML", "requests", "colorama", "importlib", "pytest"]
+requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]

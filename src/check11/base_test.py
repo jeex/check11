@@ -166,6 +166,20 @@ class BaseTest: # for a complete module with more functions and tests
 			withand = " and"
 		return withwhat
 
+	def get_full_report(self) -> list:
+		# remember user settings
+		eo = self.errors_only
+		nt = self.no_trace
+		# ignore user settings
+		self.errors_only = False
+		self.no_trace = False
+		# make report
+		report = self.get_report()
+		# back to user settings
+		self.errors_only = eo
+		self.no_trace = nt
+		return report 
+
 	def get_report(self) -> list:
 		def all_passed(test):
 			ap = True
@@ -601,6 +615,9 @@ class ApiTest:
 			except:
 				self.test_o = None
 				return
+
+	def get_full_report(self) -> list:
+		return self.test_o.get_full_report()
 
 	def run_utest(self) -> list:
 		self.test_o.runrun()
