@@ -4,9 +4,11 @@ Check11 checks Python >= 3.10 code for cpnits.com students
 How to use:
 
 ## How to use check11: 
-**check11 /absolute/path/to/dir/with/assignment/**
-or **check11 relative/path/with/assignment/ **
-or **in current working directory: check11 -c **
+	**check11 /absolute/path/to/dir/with/assignment/**
+or 
+	**check11 relative/path/with/assignment/ **
+or 
+	**in current working directory: check11 -c **
 
 For help: **check11 -h **
 
