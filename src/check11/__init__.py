@@ -104,7 +104,8 @@ def read_cmd() -> dict:
 			else:
 				help()
 				sys.exit()
-				
+		
+		''' omitting the path	
 		# -c current directory path
 		if a.lower() in ['-c', '-current']:
 			if not apath is None:
@@ -114,7 +115,8 @@ def read_cmd() -> dict:
 			apath = os.getcwd()
 			counter += 1
 			continue
-
+		'''
+		
 		if a.startswith('--'):
 			try:
 				extra_args = a.split('--')[1]
@@ -139,9 +141,13 @@ def read_cmd() -> dict:
 	if len(sys.argv) != counter:
 		help()
 		sys.exit()
-	if apath is None or aname is None:
+	if aname is None:
 		help()
 		sys.exit()	
+		
+	# path might be omitted
+	if apath is None:
+		apath = os.getcwd()
 
 	return apath, aname, no_trace, errors_only, clear_prompt, no_report
 	
