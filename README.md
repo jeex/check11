@@ -7,6 +7,7 @@ How to use:
 	check11 /absolute/path/to/dir/with/assignment/ 
 or 
 	check11 relative/path/with/assignment/ 
+	
 or in current working directory: 
 	check11 -c 
 
@@ -16,10 +17,13 @@ or in current working directory:
 ## Additional arguments
 Additional arg for no traceback:  
 	check11 --t /some/dir 
+	
 Additional arg for errors only:  
 	check11 --e /some/dir 
+	
 Additional arg for clearing prompt:
 	check11 --p /some/dir 
+	
 Combined args for no traceback and errors only: 
 	check11 --et /some/dir 
 
