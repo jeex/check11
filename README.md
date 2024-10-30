@@ -4,9 +4,9 @@ Check11 checks Python >= 3.10 code for cpnits.com students.
 ## You need a github account
 Check11 relies on a working github in your computer. 
 
-Your github alias needs to be added to [cpnits.com/check11](https://cpnits.com/check11). 
+Your github alias needs to be added to [cpnits.com/check11](https://cpnits.com/check11). Ask your teacher to do that for you.
 
-Ask your teacher to do that.
+You can only check11 assignments that come with a check11 command. Your assignment should have a line somewhere mentioning > Use check11 
 
 
 ## How to install check11
@@ -17,59 +17,63 @@ pip install check11
 ```
 
 ## How to use check11: 
+Let's asume that the project is called *nerdy*.
+
+You need to add a path to the directory with the Python files you want tested.
+
 With an **absolute path** to the dir containg the python code:
 ```
-check11 /absolute/path/to/dir/with/assignment
+check11 nerdy /absolute/path/to/dir/with/assignment
 ```
 or with a **relative path**: 
 ```
-check11 relative/path/with/assignment
+check11 nerdy relative/path/with/assignment
 ```
 
 or in **current working directory**: 
 ```
-check11 -c 
+check11 nerdy -c 
 ```
 
 ## For **help**: 
 ```
-check11 -h 
+check11 nerdy -h 
 ```
 or:
 ```
-check11 -help 
+check11 nerdy -help 
 ```
 
 ## Additional arguments
 Additional argument for **no traceback** in the testreport:  
 ```
-check11 --t /some/dir 
+check11 nerdy --t /some/dir 
 ```
 
 Additional argument for **errors only** in the test report:  
 ```
-check11 --e /some/dir 
+check11 nerdy --e /some/dir 
 ```
 
 Additional argument for **clearing the prompt** before printing the test report:  :
 ```
-check11 --p /some/dir 
+check11 nerdy --p /some/dir 
 ```
 
 Combined arguments for **no traceback** and **errors only**: 
 ```
-check11 --et /some/dir 
+check11 nerdy --et /some/dir 
 ```
 
 ## Examples
 Example (assignment in **current dir**, **errors only**, **no traceback**, **clear prompt**): 
 ```
-check11 --etp -c
+check11 nerdy --etp -c
 ```
 
 Example (assignment in **relative dir**, **clear prompt**): 
 ```
-check11 --p assignment/
+check11 nerdy --p assignment/
 ```
 
 [GitHub-flavored Markdown](https://guides.github.com/features/mastering-markdown/)

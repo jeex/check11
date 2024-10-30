@@ -39,27 +39,33 @@ def help(short=True):
 
 def read_cmd() -> dict:
 	# read the commands in versatile way:
-	# check11 -c or -C or -current ==> for assignment == current working dir
-	# check11 -h or -H or -help ==> for help
-	# check11 /abs/path/to/assignment/dir
-	# check11 --t /abs/path/to/assignment/dir ==> no traceback 
-	# check11 --e /abs/path/to/assignment/dir ==> errors only
+	# check11 assignmentname -c or -C or -current ==> for assignment == current working dir
+	# check11 assignmentname-h or -H or -help ==> for help
+	# check11 assignmentname /abs/path/to/assignment/dir
+	# check11 assignmentname --t /abs/path/to/assignment/dir ==> no traceback 
+	# check11 assignmentname --e /abs/path/to/assignment/dir ==> errors only
 	no_trace = False
 	errors_only = False
 	clear_prompt = False
 	apath = None
 	counter = 0
+	aname = None
 	
-	for a in sys.argv:
-		a = a.strip()
-		# skip empty lines in argv
-		if a == "":
-			continue
+	for i in range(len(sys.argv)):
+		a = sys.argv[i].strip()
 		
 		# skip program call
-		if a.endswith(("check11", "check11.py",)):
+		if i == 0:
 			counter += 1
 			continue
+		
+		# name of the assignment
+		if i == 1:
+			aname = sys.argv[i].strip()
+			counter += 1
+			continue
+
+		## The rest of the args can come in any order
 		
 		# help, ignore the rest
 		if a.lower() in ['-h', '-help']:
@@ -123,11 +129,11 @@ def read_cmd() -> dict:
 	if len(sys.argv) != counter:
 		help()
 		sys.exit()
-	if apath is None:
+	if apath is None or aname is None:
 		help()
 		sys.exit()	
 
-	return apath, no_trace, errors_only, clear_prompt
+	return apath, aname, no_trace, errors_only, clear_prompt
 	
 
 class TestAssignment:
@@ -136,7 +142,7 @@ class TestAssignment:
 	# 'http://127.0.0.1:5000' #
 	_MAXSIZE = 1024 * 1024
 
-	def __init__(self, path: str, no_trace: bool, errors_only: bool, clear_prompt: bool):
+	def __init__(self, path: str, aname: str, no_trace: bool, errors_only: bool, clear_prompt: bool):
 		self._git_alias = self.get_git_alias()
 		if self._git_alias is None:
 			print("No valid GIT account.")
@@ -145,7 +151,7 @@ class TestAssignment:
 		self._errors_only = errors_only
 		self._clear_prompt = clear_prompt
 		self._this_path = path
-		self._assignment = os.path.basename(self._this_path)
+		self._assignment = aname
 
 
 	def safename(self, erin: str):
@@ -272,7 +278,7 @@ class TestAssignment:
 		return True
 	
 def run():
-	path, nt, eo, cp = read_cmd()
+	path, an, nt, eo, cp = read_cmd()
 	# TODO check version online
-	check11 = TestAssignment(path, nt, eo, cp)
+	check11 = TestAssignment(path, an, nt, eo, cp)
 	check11.run()
