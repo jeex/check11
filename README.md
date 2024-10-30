@@ -14,23 +14,24 @@ to check your solution for proper structure and output.
 
 ## How to install check11
 1. Make sure you have an activated **virtual environment**.
-2. Pip install check11:
+2. Pip install check11 with...
 ```
 pip install check11
 ```
 
 ## How to use check11: 
-Let's asume that your assignment is called *nerdy*.
+Let's asume that your assignment is called **nerdy**.
 
-You need to add a path to the directory with the Python files you want tested.
+You need to add a path to the directory containing the Python files that you want tested.
 
-With an **absolute path** to the dir containg the python code:
+With an **absolute path** to the dir containg the python files:
 ```
 check11 nerdy /absolute/path/to/dir/with/assignment
 ```
-or with a **relative path**: 
+
+or with a **relative path** (a relative path never starts with **/**): 
 ```
-check11 nerdy relative/path/with/assignment
+check11 nerdy relative/path
 ```
 
 or in **current working directory**: 
@@ -40,8 +41,9 @@ check11 nerdy -c
 
 ## For **help**: 
 ```
-check11 nerdy -h 
+check11 -h 
 ```
+
 or:
 ```
 check11 nerdy -help 

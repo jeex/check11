@@ -23,18 +23,19 @@ def help(short=True):
 	if short:
 		print(f"Type {Fore.BLUE}{Style.BRIGHT}check11 -h{Style.NORMAL}{Fore.RESET} for a brief howto.{Style.RESET_ALL}")
 	else:
-		print(f"How to use check11: \n\t{Fore.LIGHTRED_EX}{Style.BRIGHT}check11 /absolute/path/to/dir/with/assignment/ {Style.RESET_ALL}")
-		print(f"\tor {Fore.LIGHTRED_EX}{Style.BRIGHT}check11 relative/path/with/assignment/ {Style.RESET_ALL}")
-		print(f"\tor in current working directory: {Fore.LIGHTRED_EX}{Style.BRIGHT}check11 -c {Style.RESET_ALL}")
+		print(f"{Style.BRIGHT}How to use check11: \n\t{Fore.LIGHTRED_EX}{Style.BRIGHT}check11 assignmentname /absolute/path/to/dir/with/assignment/ {Style.RESET_ALL}")
+		print(f"\tor {Fore.LIGHTRED_EX}{Style.BRIGHT}check11 assignmentname relative/path/with/assignment/ {Style.RESET_ALL}")
+		print(f"\tor in current working directory: {Fore.LIGHTRED_EX}{Style.BRIGHT}check11 assignmentname -c {Style.RESET_ALL}")
 		print()
-		print(f"For help: {Fore.LIGHTRED_EX}{Style.BRIGHT}check11 -h {Style.RESET_ALL}")
+		print(f"{Style.BRIGHT}For help{Style.NORMAL}: {Fore.LIGHTRED_EX}{Style.BRIGHT}check11 -h {Style.RESET_ALL}")
+		print()
 		print(f"Additional arg for no traceback: {Fore.LIGHTRED_EX}{Style.BRIGHT} --t{Style.RESET_ALL}")
 		print(f"Additional arg for errors only: {Fore.LIGHTRED_EX}{Style.BRIGHT} --e{Style.RESET_ALL}")
 		print(f"Additional arg for clearing prompt: {Fore.LIGHTRED_EX}{Style.BRIGHT} --p{Style.RESET_ALL}")
 		print(f"Combined args for no traceback and errors only: {Fore.LIGHTRED_EX}{Style.BRIGHT} --te{Style.RESET_ALL}")
 		print()
-		print(f"Example (assignment in current dir, errors only, no traceback, clear prompt): \n\t{Fore.LIGHTRED_EX}{Style.BRIGHT}check11 --etp -c{Style.RESET_ALL}")
-		print(f"Example (assignment in relative dir assignment, clear prompt): \n\t{Fore.LIGHTRED_EX}{Style.BRIGHT}check11 --p assignment/{Style.RESET_ALL}")
+		print(f"Example (assignment in current dir, errors only, no traceback, clear prompt): \n\t{Fore.LIGHTRED_EX}{Style.BRIGHT}check11 assignmentname --etp -c{Style.RESET_ALL}")
+		print(f"Example (assignment in relative dir assignment, clear prompt): \n\t{Fore.LIGHTRED_EX}{Style.BRIGHT}check11 assignmentname --p assignment/{Style.RESET_ALL}")
 
 
 def read_cmd() -> dict:
@@ -59,19 +60,18 @@ def read_cmd() -> dict:
 			counter += 1
 			continue
 		
-		# name of the assignment
-		if i == 1:
-			aname = sys.argv[i].strip()
-			counter += 1
-			continue
-
-		## The rest of the args can come in any order
-		
 		# help, ignore the rest
 		if a.lower() in ['-h', '-help']:
 			help(short=False)
 			sys.exit()
-		# abs path 
+		
+		# name of the assignment
+		if i == 1:
+			aname = sys.argv[i].lower().strip()
+			counter += 1
+			continue
+
+		## The rest of the args can come in any order
 		
 		if a.startswith('/') and os.path.isabs(a):
 			if not apath is None:
