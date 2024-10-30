@@ -71,7 +71,7 @@ check11 nerdy --et /some/dir
 ```
 
 ## Examples
-Example (assignment in **current dir**, **errors only**, **no traceback**, **clear prompt**): 
+Example, where **nerdy** is the name of the assignment (assignment in **current dir**, **errors only**, **no traceback**, **clear prompt**): 
 ```
 check11 nerdy --etp
 ```
