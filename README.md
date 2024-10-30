@@ -46,7 +46,7 @@ check11 -h
 
 or:
 ```
-check11 nerdy -help 
+check11 -help
 ```
 
 ## Additional arguments
