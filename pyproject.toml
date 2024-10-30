@@ -1,0 +1,18 @@
+[project]
+name = "cpnits_check11"
+version = "0.0.1"
+authors = [
+  { name="Victor G.B. Peters", email="victor@jeex.eu" },
+]
+description = "Client side of Check11 service for CPNITS"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/pypa/sampleproject"
+Issues = "https://github.com/pypa/sampleproject/issues"
