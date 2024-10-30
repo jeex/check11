@@ -6,11 +6,11 @@ Check11 relies on a working github in your computer.
 
 Your github alias needs to be added to [cpnits.com/check11](https://cpnits.com/check11). Ask your teacher to do that for you.
 
-You can only check11 assignments that come with a check11 command. Your assignment should have a line somewhere mentioning: Use 
+You can only check11 assignments that come with a check11 command. Your assignment should have a line somewhere mentioning: *"Use* 
 ```
 check11 assignmentname -c
 ``` 
-to check your solution for proper structure and output.
+*to check your solution for proper structure and output."*
 
 ## How to install check11
 1. Make sure you have an activated **virtual environment**.
