@@ -6,8 +6,11 @@ Check11 relies on a working github in your computer.
 
 Your github alias needs to be added to [cpnits.com/check11](https://cpnits.com/check11). Ask your teacher to do that for you.
 
-You can only check11 assignments that come with a check11 command. Your assignment should have a line somewhere mentioning > Use check11 
-
+You can only check11 assignments that come with a check11 command. Your assignment should have a line somewhere mentioning: Use 
+```
+check11 assignmentname -c
+``` 
+to check your solution for proper structure and output.
 
 ## How to install check11
 1. Make sure you have an activated **virtual environment**.
@@ -17,7 +20,7 @@ pip install check11
 ```
 
 ## How to use check11: 
-Let's asume that the project is called *nerdy*.
+Let's asume that your assignment is called *nerdy*.
 
 You need to add a path to the directory with the Python files you want tested.
 
