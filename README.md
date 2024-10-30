@@ -3,7 +3,10 @@
 Check11 checks Python >= 3.10 code for cpnits.com students. 
 ## You need a github account
 Check11 relies on a working github in your computer. 
-Your github alias needs to be added to [cpnits.com/check11](https://cpnits.com/check11)
+
+Your github alias needs to be added to [cpnits.com/check11](https://cpnits.com/check11). 
+
+Ask your teacher to do that.
 
 
 ## How to install check11
