@@ -1,6 +1,6 @@
 [project]
 name = "cpnits_check11"
-version = "0.0.1"
+version = "0.1.0"
 authors = [
   { name="Victor G.B. Peters", email="victor@jeex.eu" },
 ]
@@ -13,6 +13,9 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 
+[project.scripts]
+check11 = "src.cpnits_check11.check11"
+
 [project.urls]
-Homepage = "https://github.com/pypa/sampleproject"
-Issues = "https://github.com/pypa/sampleproject/issues"
+Homepage = "https://github.com/jeex/check11"
+Issues = "https://github.com/jeex/check11/issues"
