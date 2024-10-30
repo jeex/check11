@@ -54,7 +54,7 @@ Example (assignment in **current dir**, **errors only**, **no traceback**, **cle
 check11 --etp -c
 ```
 
-Example (assignment in **relative dir** assignment, **clear prompt**): 
+Example (assignment in **relative dir**, **clear prompt**): 
 ```
 check11 --p assignment/
 ```
