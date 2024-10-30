@@ -14,10 +14,10 @@ from colorama import Style
 # sys.path.append(PARENT)
 import importlib
 
-from cpnits_check11.base_test import ApiTest, BaseTest
+from check11.base_test import ApiTest, BaseTest
 
 VERSION = '0.1.0'
-APP_NAME = 'cpnits_check11'
+APP_NAME = 'check11'
 
 def help(short=True):
 	if short:
@@ -73,17 +73,21 @@ def read_cmd() -> dict:
 
 		## The rest of the args can come in any order
 		
-		if a.startswith('/') and os.path.isabs(a):
+		if a.startswith(('/', '~/',)):
 			if not apath is None:
 				# two paths?
 				help()
+				sys.exit()
+			if os.path.isabs(a):
+				apath = a
+				counter += 1
+				continue
+			else:
+				help()
 				sys.exit()				
-			apath = a
-			counter += 1
-			continue	
 		
-		# relative path can be any word not...
-		if not a.startswith(("-", "/",)) and not a.endswith(("check11", "check11.py",)):
+		# relative path can be any word not starting with
+		if not a.startswith(("-", "/", "~",)):
 			if not apath is None:
 				# two paths?
 				help()

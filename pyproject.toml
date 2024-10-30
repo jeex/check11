@@ -1,10 +1,15 @@
+[build-system]
+requires = ["setuptools", "PyYAML", "requests", "colorama", "importlib", "pytest"]
+build-backend = "setuptools.build_meta"
+
 [project]
-name = "cpnits_check11"
-version = "0.1.0"
+name = "check11"
+version = "0.0.1"
 authors = [
   { name="Victor G.B. Peters", email="victor@jeex.eu" },
 ]
-description = "Client side of Check11 service for CPNITS"
+dependencies = ["PyYAML", "requests", "colorama", "importlib", "pytest"]
+description = "Client side of Check11 service for cpnits.com"
 readme = "README.md"
 requires-python = ">=3.10"
 classifiers = [
@@ -14,7 +19,7 @@ classifiers = [
 ]
 
 [project.scripts]
-check11 = "src.cpnits_check11.check11"
+check11 = "check11:run"
 
 [project.urls]
 Homepage = "https://github.com/jeex/check11"

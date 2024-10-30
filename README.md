@@ -22,9 +22,9 @@ pip install check11
 ## How to use check11: 
 Let's asume that your assignment is called **nerdy**.
 
-You need to add a path to the directory containing the Python files that you want tested.
+Check11 needs a path to the directory containing the Python files that you want tested.
 
-With an **absolute path** to the dir containg the python files:
+With an **absolute path** (starting with **/**) to the dir containg the python files:
 ```
 check11 nerdy /absolute/path/to/dir/with/assignment
 ```

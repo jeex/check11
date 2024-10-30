@@ -15,7 +15,7 @@ from unittest.mock import patch, Mock
 import contextlib
 import pytest
 
-APP_NAME = 'cpnits_check11'
+APP_NAME = 'check11'
 
 class TestItem:
 	def __init__(self):
