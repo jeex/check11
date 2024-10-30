@@ -76,7 +76,6 @@ def read_cmd() -> dict:
 			continue
 
 		## The rest of the args can come in any order
-		
 		if a.startswith(('/', '~/',)):
 			if not apath is None:
 				# two paths?
@@ -96,14 +95,8 @@ def read_cmd() -> dict:
 				# two paths?
 				help()
 				sys.exit()
-			tpath = os.path.abspath(a)
-			if os.path.isdir(tpath):
-				apath = tpath
-				counter += 1
-				continue
-			else:
-				help()
-				sys.exit()
+			apath = os.path.abspath(a)
+			counter += 1
 		
 		''' omitting the path	
 		# -c current directory path
@@ -149,6 +142,7 @@ def read_cmd() -> dict:
 	if apath is None:
 		apath = os.getcwd()
 
+	print('INPUT', apath, aname, no_trace, errors_only, clear_prompt, no_report)
 	return apath, aname, no_trace, errors_only, clear_prompt, no_report
 	
 
@@ -308,11 +302,19 @@ class TestAssignment:
 		if not self.remote_get_permission():
 			return False
 		
+		# check path
+		if not os.path.isdir(self._this_path):
+			print(f"{Fore.LIGHTRED_EX}The path: {Style.BRIGHT}{self._this_path}{Style.NORMAL} does not exist!{Style.RESET_ALL}")
+			return False
+		
 		self.get_about_assignment()
 		print(f"{Fore.CYAN}Looking for python files {Style.BRIGHT}{self._allowed_filenames}{Style.NORMAL}.{Style.RESET_ALL}")
 
 		# find filenames for testing at user dir
 		self.get_local_filenames()
+		if len(self._found_filenames) == 0:
+			print(f"{Fore.LIGHTRED_EX}No python files found for testing. Maybe {Style.BRIGHT}{self._this_path}{Style.NORMAL} is not the right directory?{Style.RESET_ALL}")
+			return False
 		print(f"{Fore.CYAN}Python files ready for testing: {Style.BRIGHT}[{', '.join(self._found_filenames)}]{Style.NORMAL}.{Style.RESET_ALL}")
 		
 		self.full_report = list()
@@ -340,7 +342,7 @@ class TestAssignment:
 		
 		# store full report.log in user folder
 		if self.local_user_store_report():
-			print(f"{Fore.CYAN}The test report has been saved as {self._assignment}.log{Style.RESET_ALL}")
+			print(f"{Fore.CYAN}The test report has been saved as {self._assignment}.log{Style.RESET_ALL}.")
 		
 		# upload full reports 
 		self.remote_upload_reports()
