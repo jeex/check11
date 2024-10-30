@@ -1,7 +1,13 @@
 # Cpnits Check11
 
 Check11 checks Python >= 3.10 code for cpnits.com students
-How to use:
+
+## How to install check11
+1. Make sure you have an activated **virtual environment**.
+2. Pip install check11:
+```
+pip install check11
+```
 
 ## How to use check11: 
 With an **absolute path** to the dir containg the python code:
